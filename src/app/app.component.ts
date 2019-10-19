@@ -46,7 +46,7 @@ export class AppComponent {
     { id: 2, name: 'SAMSUNG', fullName: 'SAMSUNG ELECTRONICS' },
     { id: 3, name: 'BEKO', fullName: 'BEKO ELECTRONICS' },
     { id: 4, name: 'ARÇELİK', fullName: 'ARÇELİK AŞ' },
-    { id: 5, name: 'PHILPS', fullName: 'PHILPS ELECTRONICS' },
+    { id: 5, name: 'PHILIPS', fullName: 'PHILIPS ELECTRONICS' },
     { id: 6, name: 'VESTEL', fullName: 'VESTEL ELECTRONICS' },
     { id: 7, name: 'SUNNY', fullName: 'SUNNY ELECTRONICS' },
     { id: 8, name: 'TOSHIBA', fullName: 'TOSHIBA ELECTRONICS' },
