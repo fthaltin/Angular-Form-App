@@ -1,21 +1,276 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<div class="container-fluid mt-5">
+  <div class="row">
+    <div class="col-12 col-md-5">
+      <form #generateForm="ngForm" (ngSubmit)="generateForm.form.valid && CardCodes.length > 0 && createHtml(generateForm)" (keydown.enter)="$event.preventDefault()" novalidate>
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <div class="d-flex justify-content-between">
+                <label for="CartTypes">Kart Türü</label>
+                <div *ngIf="cartTypes.invalid && (cartTypes.dirty || cartTypes.touched)" class="text-danger">
+                  <div *ngIf="cartTypes.errors.required">
+                    Kart türü gereklidir!
+                  </div>
+                </div>
+              </div>
+              <select #cartTypes="ngModel" id="CartTypes" class="form-control" name="cartType" (change)="changeCartType($event)" [(ngModel)]="CartType" required>
+                <option [ngValue]="null">Kart Türü Seçiniz</option>
+                <option *ngFor="let cart of CartTypes" [value]="cart.id">{{cart.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <div class="d-flex justify-content-between">
+                <label for="brand">Marka</label>
+                <div *ngIf="brand.invalid && (brand.dirty || brand.touched)" class="text-danger">
+                  <div *ngIf="brand.errors.required">
+                    Marka gereklidir!
+                  </div>
+                </div>
+              </div>
+              <select #brand="ngModel" id="brand" class="form-control" name="brand" (change)="changeBrand($event)" [(ngModel)]="Brand" required>
+                <option [ngValue]="null">Marka Seçiniz</option>
+                <option *ngFor="let brand of Brands" [value]="brand.id">{{brand.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <div class="d-flex justify-content-between"> 
+                <label for="model">Model</label>
+                <div *ngIf="model.invalid && (model.dirty || model.touched)" class="text-danger">
+                  <div *ngIf="model.errors.required">
+                    Model gereklidir!
+                  </div>
+                </div>
+              </div>
+              <input #model="ngModel" id="model" name="model" class="form-control" type="text" [(ngModel)]="modelValue" required>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <div class="d-flex justify-content-between"> 
+                <label for="tvType">Tv Türü</label>
+                <div *ngIf="tvType.invalid && (tvType.dirty || tvType.touched)" class="text-danger">
+                  <div *ngIf="tvType.errors.required">
+                    Tv Türü gereklidir!
+                  </div>
+                </div>
+              </div>
+              <select #tvType="ngModel" id="tvType" class="form-control" name="tvType" (change)="changeTvType($event)" [(ngModel)]="TvType" required>
+                <option [ngValue]="null">Tv Türü Seçiniz</option>
+                <option *ngFor="let tv of TvTypes" [value]="tv.id">{{tv.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <div class="d-flex justify-content-between"> 
+                <label for="tvFeature">Tv Özelliği</label>
+                <div *ngIf="tvFeatureInput.invalid && (tvFeatureInput.dirty || tvFeatureInput.touched)" class="text-danger">
+                  <div *ngIf="tvFeatureInput.errors.required">
+                    Tv Özelliği gereklidir!
+                  </div>
+                </div>
+              </div>
+              <input #tvFeatureInput="ngModel" id="tvFeature" name="tvFeature" class="form-control" type="text" [(ngModel)]="tvFeature" required>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <div class="d-flex justify-content-between"> 
+                <label for="cardCodes">Kart Kodları(Press Enter)</label>
+              </div>
+              <input #cardCodeInput id="cardCodes" name="cartCode" class="form-control" type="text" [(ngModel)]="cartCode" (keyup.enter)="addCardCode(cardCodeInput.value)">
+              <div *ngIf="CardCodes.length > 0" class="card-codes d-flex mt-2">
+                <div 
+                  class="d-flex justify-content-between align-items-center p-1 bg-info mr-2 text-white" 
+                  style="border-radius: 4px; font-size: 11px;"
+                  *ngFor="let item of CardCodes; let i = index">
+                  <span>{{item}}</span>  
+                  <span title="Kaldır" class="ml-3 remove" style="font-size: 10px; cursor: pointer; display: block;" (click)="removeCardCode(cardCodeInput, i)">X</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="col-6">
+            <div class="form-group">
+              <div class="d-flex justify-content-between"> 
+                <label for="cardCodes">Kart Kodları(Press Enter)</label>
+                <div *ngIf="cardCodeInput.invalid && (cardCodeInput.dirty || cardCodeInput.touched) && CardCodes.length == 0" class="text-danger">
+                  <div *ngIf="cardCodeInput.errors.required">
+                    Cart kodları gereklidir!
+                  </div>
+                </div>
+              </div>
+              <input #cardCodeInput="ngModel" id="cardCodes" name="cartCode" class="form-control" type="text" [(ngModel)]="cartCode" [cardCodeLength]="CardCodes.length" (keyup.enter)="createCardCode(cardCodeInput.value)">
+              <div *ngIf="CardCodes.length > 0" class="card-codes d-flex mt-2">
+                <div 
+                  class="d-flex justify-content-between align-items-center p-1 bg-info mr-2 text-white" 
+                  style="border-radius: 4px; font-size: 11px;"
+                  *ngFor="let item of CardCodes; let i = index">
+                  <span>{{item}}</span>  
+                  <span title="Kaldır" class="ml-3 remove" style="font-size: 10px; cursor: pointer; display: block;" (click)="removeCardCode(cardCodeInput, i)">X</span>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <div class="col-6">
+            <div class="form-group">
+              <div class="d-flex justify-content-between"> 
+                <label for="panelCode">Panel Kodu</label>
+                <div *ngIf="panelCodeInput.invalid && (panelCodeInput.dirty || panelCodeInput.touched)" class="text-danger">
+                  <div *ngIf="panelCodeInput.errors.required">
+                    Panel Kodu gereklidir!
+                  </div>
+                </div>
+              </div>
+              <input #panelCodeInput="ngModel" id="panelCode" name="panelCode" class="form-control" type="text" [(ngModel)]="panelCode" required>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <div class="d-flex justify-content-between"> 
+                <label for="tvSize">Tv Boyutu</label>
+                <div *ngIf="tvSize.invalid && (tvSize.dirty || tvSize.touched)" class="text-danger">
+                  <div *ngIf="tvSize.errors.required">
+                    TV Boyutu gereklidir!
+                  </div>
+                </div>
+              </div>
+              <select #tvSize="ngModel" id="tvSize" class="form-control" name="tvSize" (change)="changeTvSize($event)" [(ngModel)]="TvSize" required>
+                <option [ngValue]="null">Tv Boyutu Seçiniz</option>
+                <option *ngFor="let size of TvSizes" [value]="size.id">{{size.size}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <div class="d-flex justify-content-between"> 
+                <label for="productCode">Ürün Kodu</label>
+                <div *ngIf="productCodeInput.invalid && (productCodeInput.dirty || productCodeInput.touched)" class="text-danger">
+                  <div *ngIf="productCodeInput.errors.required">
+                    Ürün Kodu gereklidir!
+                  </div>
+                </div>
+              </div>
+              <input #productCodeInput="ngModel" id="productCode" name="productCode" class="form-control" type="text" [(ngModel)]="productCode" required>
+            </div>
+          </div>
+          <div class="col-12" *ngIf="(generateForm.invalid || CardCodes.length == 0) && generateForm.submitted">
+            <div class="alert alert-danger">
+              Lütfen form alanlarını eksizksiz bir şekilde doldurunuz
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <button class="btn btn-success" type="submit">Generate Html</button>
+            <button class="btn btn-danger ml-3" *ngIf="generatedHtml != undefined" (click)="clear(generateForm)">Formu Temizle</button>
+          </div>
+        </div>
+      </form>
+      <div class="row">
+        <div class="col-12 mt-4" *ngIf="generatedHtml">
+          <div class="row">
+            <div class="col-12 mb-3">
+              <button class="btn btn-primary" (click)="copyHtml(codeText)" value="click to copy" >Html Kodu Kopyala</button>
+            </div>
+            <div class="col-12">
+              <textarea #codeText class="w-100" name="generatedHtml" id="" cols="30" rows="5" [ngModel]="generatedHtml"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-7">
+      <div class="sablon" #sablon>
+        <div class="divBaslik">LED/LCD TV KARTLARI &Ouml;ZELLİKLERİ</div>
+      
+        <div class="divTable">
+        <div class="divTableBody">
+        <div class="divTableRow">
+        <div class="divTableCell">TV MARKA MODELİ:</div>
+      
+        <!-- <div class="divTableCell2">SONY BRAVIA KDL-V40A12U WIDESCREEN HD READY LCD TV</div> -->
+        <div class="divTableCell2">{{selectedBrand ? selectedBrand.name : '.....' }} {{isNullorBlank(modelValue) ? '.....' : modelValue }} {{isNullorBlank(tvFeature) ? '.....' : tvFeature}} {{selectedTvType ? selectedTvType?.name : '.....'}} TV</div>
+        </div>
+      
+        <div class="divTableRow">
+        <div class="divTableCell">KART KODLARI:</div>
+      
+        <div class="divTableCell2">
+          <span *ngFor="let cardCodeItem of CardCodes; let i = index">
+            {{cardCodeItem}} <br *ngIf="CardCodes.length !== i"/>
+          </span>
+        </div>
+        </div>
+      
+        <div class="divTableRow">
+        <div class="divTableCell">KART T&Uuml;R&Uuml;:</div>
+      
+        <!-- <div class="divTableCell2">LCD TV BESLEME KARTI / POWER SUPPLY BOARD FOR LCD TV</div> -->
+        <div class="divTableCell2">{{selectedTvType ? selectedTvType.name : '.....'}} TV {{selectedCartType ? selectedCartType.name : '.....' }} / {{selectedCartType ? selectedCartType.nameEng : '.....' }} FOR {{selectedTvType ? selectedTvType.nameEng : '.....'}} TV</div>
+        </div>
+      
+        <div class="divTableRow">
+        <div class="divTableCell">KART &Uuml;RETİCİSİ:</div>
+      
+        <!-- <div class="divTableCell2">SONY ELECTRONICS</div> -->
+        <div class="divTableCell2">{{selectedBrand ? selectedBrand.fullName : '.....'}} </div>
+        </div>
+      
+        <div class="divTableRow">
+        <div class="divTableCell">UYUMLU MODELLER:</div>
+      
+        <!-- <div class="divTableCell2">KDL-V40A12U / SONY 40&#39;&#39;</div> -->
+        <div class="divTableCell2">{{isNullorBlank(modelValue) ? '.....' : modelValue }} / {{selectedBrand ? selectedBrand.name : '.....'}} {{selectedTvSize ? selectedTvSize.size : '.....'}} - {{selectedTvSize ? selectedTvSize.screen : '.....' }}</div>
+        </div>
+      
+        <div class="divTableRow">
+        <div class="divTableCell">PANEL KODU:</div>
+      
+        <!-- <div class="divTableCell2">----</div> -->
+        <div class="divTableCell2">{{isNullorBlank(panelCode) ? '.....' : panelCode }}</div>
+        </div>
+      
+        <div class="divTableRow">
+        <div class="divTableCell">&Ouml;NEMLİ NOT:</div>
+      
+        <div class="divTableCell3">&Uuml;R&Uuml;NLERİMİZ PANEL HASARLI TVLERDEN S&Ouml;K&Uuml;LM&Uuml;Ş, TEST EDİLMİŞ VE &Ccedil;ALIŞIR DURUMDA SAĞLAM KARTLARDIR.</div>
+        </div>
+      
+        <div class="divTableRow">
+        <div class="divTableCell">&nbsp;</div>
+      
+        <div class="divTableCell3">T&Uuml;M KARTLARIMIZ FİRMAMIZ GARANTİSİ ALTINDA SİZLERE TEST EDİLEREK G&Ouml;NDERİLİR.</div>
+        </div>
+      
+        <div class="divTableRow">
+        <div class="divTableCell">&nbsp;</div>
+      
+        <div class="divTableCell2">200 TL ALIŞVERİŞE &Uuml;CRETSİZ; STOKTAN AYNI G&Uuml;N KARGO</div>
+        </div>
+      
+        <div class="divTableRow">
+        <div class="divTableCell">&nbsp;</div>
+      
+        <div class="divTableCell2">BİZİMLE İ&Ccedil;İNİZ RAHAT! AYDIN ELEKTRONİK TAM 40 YILDIR KAYNARCA - PENDİK&#39;TE G&Uuml;VENLE HİZMET VERMEKTEDİR.</div>
+        </div>
+        </div>
+        </div>
+      
+        <p>&nbsp;</p>
+      
+        <div align="left">BU TV KARTI {{selectedBrand ? selectedBrand.fullName : '.....'}} &Uuml;RETİCİSİ TARAFINDAN &Uuml;RETİLEN {{isNullorBlank(modelValue) ? '.....' : modelValue }} MODEL {{selectedTvType ? selectedTvType.name : '.....' }} TV&#39;YE AİT  
+        <span *ngFor="let cardCodeItem of CardCodes; let i = index">
+          {{cardCodeItem}} {{ (CardCodes.length - 1 ) !== i ? ',' : ''}}
+        </span>
+          NUMARALARINI TAŞIYAN {{selectedCartType ? selectedCartType.name : '.....'}} KARTIDIR.<br />
+        AYDIN ELEKTRONİK STOK KODU: <strong>{{isNullorBlank(productCode) ? '.....' : productCode}}</strong>.</div>
+      
+      </div>
+    </div>
+  </div>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
-
-<router-outlet></router-outlet>
