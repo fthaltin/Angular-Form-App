@@ -170,5 +170,9 @@ export class AppComponent {
 
     this.CardCodes = []
     this.generatedHtml = undefined;
+    this.selectedBrand = null;
+    this.selectedCartType = null;
+    this.selectedTvSize = null;
+    this.selectedTvType = null
   }
 }
