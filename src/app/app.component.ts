@@ -30,11 +30,11 @@ export class AppComponent {
 
   public CartTypes = [
     { id: 1, name: 'BESLEME KARTI', nameEng: 'POWER BOARD' },
-    { id: 2, name: 'ANAKART', nameEng: 'MAINBOARD' },
+    { id: 2, name: 'ANAKARTI', nameEng: 'MAINBOARD' },
     { id: 3, name: 'İNVERTÖR KARTI', nameEng: 'BACKLIGHT INVERTER' },
     { id: 4, name: 'Y-SUS KARTI', nameEng: 'Y-MAIN BOARD' },
     { id: 5, name: 'Z-SUS KARTI', nameEng: 'X-MAIN BOARD' },
-    { id: 6, name: 'T-CON KARTI:', nameEng: 'T-CON BOARD(LOGIC BOARD)' },
+    { id: 6, name: 'T-CON KARTI', nameEng: 'T-CON (LOGIC) BOARD' },
     { id: 7, name: 'PANEL LEDLERİ', nameEng: 'LED BACKLIGHT STRIPS' },
     { id: 8, name: 'LED ÇUBUK', nameEng: 'LED BAR' },
     { id: 9, name: 'LED SÜRÜCÜ KARTI', nameEng: 'LED DRIVER BOARD' },
@@ -50,6 +50,10 @@ export class AppComponent {
     { id: 6, name: 'VESTEL', fullName: 'VESTEL ELECTRONICS' },
     { id: 7, name: 'SUNNY', fullName: 'SUNNY ELECTRONICS' },
     { id: 8, name: 'TOSHIBA', fullName: 'TOSHIBA ELECTRONICS' },
+    { id: 9, name: 'SONY', fullName: 'SONY ELECTRONICS' },
+    { id: 10, name: 'SEG', fullName: 'SEG ELECTRONICS' },
+    { id: 11, name: 'REGAL', fullName: 'REGAL ELECTRONICS' },
+    { id: 12, name: 'AXEN', fullName: 'AXEN ELECTRONICS' },
 
   ]
 
@@ -59,16 +63,20 @@ export class AppComponent {
     { id: 3, size: '19"', screen: '48 EKRAN' },
     { id: 4, size: '22"', screen: '55 EKRAN' },
     { id: 5, size: '23"', screen: '58 EKRAN' },
-    { id: 6, size: '32"', screen: '82 EKRAN' },
-    { id: 7, size: '37"', screen: '94 EKRAN' },
-    { id: 8, size: '40"', screen: '102 EKRAN' },
-    { id: 9, size: '42"', screen: '106 EKRAN' },
-    { id: 10, size: '46"', screen: '117 EKRAN' },
-    { id: 11, size: '49"', screen: '124 EKRAN' },
-    { id: 12, size: '50"', screen: '127 EKRAN' },
-    { id: 13, size: '55"', screen: '139 EKRAN' },
-    { id: 14, size: '60"', screen: '152 EKRAN' },
-    { id: 15, size: '75"', screen: '190 EKRAN' },
+    { id: 6, size: '26"', screen: '66 EKRAN' },
+    { id: 7, size: '32"', screen: '82 EKRAN' },
+    { id: 8, size: '37"', screen: '94 EKRAN' },
+    { id: 9, size: '39"', screen: '99 EKRAN' },
+    { id: 10, size: '40"', screen: '102 EKRAN' },
+    { id: 11, size: '42"', screen: '106 EKRAN' },
+    { id: 12, size: '43"', screen: '109 EKRAN' },
+    { id: 13, size: '46"', screen: '117 EKRAN' },
+    { id: 14, size: '48"', screen: '122 EKRAN' },
+    { id: 15, size: '49"', screen: '124 EKRAN' },
+    { id: 16, size: '50"', screen: '127 EKRAN' },
+    { id: 17, size: '55"', screen: '139 EKRAN' },
+    { id: 18, size: '60"', screen: '152 EKRAN' },
+    { id: 19, size: '75"', screen: '190 EKRAN' },
   ]
 
   public TvTypes = [
@@ -81,20 +89,46 @@ export class AppComponent {
     return value == '' || value === null ? true : false
   }
 
+  splitString(str){
+    if(str == undefined || str == null) return '';
+    str = str.trim();
+    return str.split(' ').join(', ') + ',';
+  }
+
   changeCartType(event) {
-    this.selectedCartType = this.CartTypes.find(item => item.id == event.target.value)
+    const { value } = event.target;
+    if(value == null) {
+      this.selectedCartType = null;
+      return
+    }
+    this.selectedCartType = this.CartTypes.find(item => item.id == value)
   }
 
   changeBrand(event) {
-    this.selectedBrand = this.Brands.find(item => item.id == event.target.value)
+    const { value } = event.target;
+    if(value == null) {
+      this.selectedBrand = null;
+      return
+    }
+    this.selectedBrand = this.Brands.find(item => item.id == value)
   }
 
   changeTvType(event) {
-    this.selectedTvType = this.TvTypes.find(item => item.id == event.target.value)
+    const { value } = event.target;
+    if(value == null) {
+      this.selectedTvType = null;
+      return
+    }
+    this.selectedTvType = this.TvTypes.find(item => item.id == value)
   }
 
   changeTvSize(event) {
-    this.selectedTvSize = this.TvSizes.find(item => item.id == event.target.value)
+    const { value } = event.target;
+    if(value == null) {
+      this.selectedTvSize = null;
+      return
+    }
+    this.selectedTvSize = this.TvSizes.find(item => item.id == value)
   }
 
   addCardCode(value) {

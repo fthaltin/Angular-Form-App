@@ -185,6 +185,53 @@
       </div>
     </div>
     <div class="col-12 col-md-7">
+      <div class="row">
+        <div class="col-6 mb-4">
+          <h4 class="text-danger">ÜRÜN İSMİ</h4>
+          <hr>
+          <div class="product-name">
+            <ng-container *ngFor="let cardCodeItem of CardCodes; let i = index">
+              {{cardCodeItem}}{{ (CardCodes.length - 1 ) !== i ? ',' : ''}}
+            </ng-container>
+            {{selectedBrand?.name}} {{modelValue}} {{selectedTvType?.name}} {{selectedCartType?.name}} {{selectedCartType? '(' + selectedCartType?.nameEng + ')': null}}
+          </div>
+        </div>
+        <div class="col-6 mb-4">
+          <h4 class="text-danger">KISA AÇIKLAMA</h4>
+          <hr>
+          <div class="short-desc">
+            {{selectedBrand?.name}} {{modelValue}} {{selectedTvType?.name}} {{selectedCartType?.name}} / {{selectedCartType?.nameEng}} FOR {{selectedBrand?.name}} {{selectedTvType?.nameEng}}. BOARD NO.S 
+            <ng-container *ngFor="let cardCodeItem of CardCodes; let i = index">
+              {{cardCodeItem}}{{ (CardCodes.length - 1 ) !== i ? ',' : ''}}
+            </ng-container>
+          </div>
+        </div>
+        <div class="col-6 mb-4">
+          <h4 class="text-danger">SAYFA AÇIKLAMASI</h4>
+          <hr>
+          <div class="page-desc">
+            {{selectedBrand?.name}} Marka {{modelValue}} Model {{selectedTvSize?.size}} {{selectedTvSize ? '(' +selectedTvSize.screen+')' : null}} {{selectedTvType?.name}} {{selectedCartType?.name}}'DIR KART KOD NO.LARI 
+            <ng-container *ngFor="let cardCodeItem of CardCodes; let i = index">
+              {{cardCodeItem}}{{ (CardCodes.length - 1 ) !== i ? ',' : ''}}
+            </ng-container>
+          </div>
+        </div>
+        <div class="col-6 mb-4">
+          <h4 class="text-danger">SAYFA ANAHTAR KELİME</h4>
+          <hr>
+          <div class="page-keyword">
+            {{selectedBrand?.name}}, {{selectedTvType?.name}}, {{selectedTvType?.nameEng}}, TV, TELEVİZYON, {{splitString(selectedCartType?.name)}} {{splitString(selectedCartType?.nameEng)}}
+            <ng-container *ngFor="let cardCodeItem of CardCodes; let i = index">
+              {{cardCodeItem}}{{ (CardCodes.length - 1 ) !== i ? ',' : ''}}
+            </ng-container>,
+            {{selectedTvSize?.size}}, {{selectedTvSize?.screen}}, {{modelValue}}
+          </div>
+        </div>
+      </div>
+      <div class="mt-5">
+        <h4 class="text-success">HTML CONTENT</h4>
+        <hr>
+      </div>
       <div class="sablon" #sablon>
         <div class="divBaslik">LED/LCD TV KARTLARI &Ouml;ZELLİKLERİ</div>
       
@@ -193,7 +240,6 @@
         <div class="divTableRow">
         <div class="divTableCell">TV MARKA MODELİ:</div>
       
-        <!-- <div class="divTableCell2">SONY BRAVIA KDL-V40A12U WIDESCREEN HD READY LCD TV</div> -->
         <div class="divTableCell2">{{selectedBrand ? selectedBrand.name : '.....' }} {{isNullorBlank(modelValue) ? '.....' : modelValue }} {{isNullorBlank(tvFeature) ? '.....' : tvFeature}} {{selectedTvType ? selectedTvType?.name : '.....'}} TV</div>
         </div>
       
@@ -201,37 +247,33 @@
         <div class="divTableCell">KART KODLARI:</div>
       
         <div class="divTableCell2">
-          <span *ngFor="let cardCodeItem of CardCodes; let i = index">
+          <ng-container *ngFor="let cardCodeItem of CardCodes; let i = index">
             {{cardCodeItem}} <br *ngIf="CardCodes.length !== i"/>
-          </span>
+          </ng-container>
         </div>
         </div>
       
         <div class="divTableRow">
         <div class="divTableCell">KART T&Uuml;R&Uuml;:</div>
       
-        <!-- <div class="divTableCell2">LCD TV BESLEME KARTI / POWER SUPPLY BOARD FOR LCD TV</div> -->
         <div class="divTableCell2">{{selectedTvType ? selectedTvType.name : '.....'}} TV {{selectedCartType ? selectedCartType.name : '.....' }} / {{selectedCartType ? selectedCartType.nameEng : '.....' }} FOR {{selectedTvType ? selectedTvType.nameEng : '.....'}} TV</div>
         </div>
       
         <div class="divTableRow">
         <div class="divTableCell">KART &Uuml;RETİCİSİ:</div>
       
-        <!-- <div class="divTableCell2">SONY ELECTRONICS</div> -->
         <div class="divTableCell2">{{selectedBrand ? selectedBrand.fullName : '.....'}} </div>
         </div>
       
         <div class="divTableRow">
         <div class="divTableCell">UYUMLU MODELLER:</div>
       
-        <!-- <div class="divTableCell2">KDL-V40A12U / SONY 40&#39;&#39;</div> -->
-        <div class="divTableCell2">{{isNullorBlank(modelValue) ? '.....' : modelValue }} / {{selectedBrand ? selectedBrand.name : '.....'}} {{selectedTvSize ? selectedTvSize.size : '.....'}} - {{selectedTvSize ? selectedTvSize.screen : '.....' }}</div>
+        <div class="divTableCell2">{{isNullorBlank(modelValue) ? '.....' : modelValue }} / {{selectedBrand ? selectedBrand.name : '.....'}} {{selectedTvSize ? selectedTvSize.size : '.....'}} ({{selectedTvSize ? selectedTvSize.screen : '.....' }})</div>
         </div>
       
         <div class="divTableRow">
         <div class="divTableCell">PANEL KODU:</div>
       
-        <!-- <div class="divTableCell2">----</div> -->
         <div class="divTableCell2">{{isNullorBlank(panelCode) ? '.....' : panelCode }}</div>
         </div>
       
@@ -263,10 +305,10 @@
         <p>&nbsp;</p>
       
         <div align="left">BU TV KARTI {{selectedBrand ? selectedBrand.fullName : '.....'}} &Uuml;RETİCİSİ TARAFINDAN &Uuml;RETİLEN {{isNullorBlank(modelValue) ? '.....' : modelValue }} MODEL {{selectedTvType ? selectedTvType.name : '.....' }} TV&#39;YE AİT  
-        <span *ngFor="let cardCodeItem of CardCodes; let i = index">
-          {{cardCodeItem}} {{ (CardCodes.length - 1 ) !== i ? ',' : ''}}
-        </span>
-          NUMARALARINI TAŞIYAN {{selectedCartType ? selectedCartType.name : '.....'}} KARTIDIR.<br />
+        <ng-container *ngFor="let cardCodeItem of CardCodes; let i = index">
+          {{cardCodeItem}}{{ (CardCodes.length - 1 ) !== i ? ',' : ''}}
+        </ng-container>
+          NUMARALARINI TAŞIYAN {{selectedCartType ? selectedCartType.name : '.....'}}'DIR'.<br />
         AYDIN ELEKTRONİK STOK KODU: <strong>{{isNullorBlank(productCode) ? '.....' : productCode}}</strong>.</div>
       
       </div>
