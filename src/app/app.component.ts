@@ -92,7 +92,7 @@ export class AppComponent {
   splitString(str){
     if(str == undefined || str == null) return '';
     str = str.trim();
-    return str.split(' ').join(', ') + ',';
+    return str.split(' ').join(', ');
   }
 
   changeCartType(event) {

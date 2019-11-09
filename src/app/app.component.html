@@ -220,7 +220,7 @@
           <h4 class="text-danger">SAYFA ANAHTAR KELİME</h4>
           <hr>
           <div class="page-keyword">
-            {{selectedBrand?.name}}, {{selectedTvType?.name}}, {{selectedTvType?.nameEng}}, TV, TELEVİZYON, {{splitString(selectedCartType?.name)}} {{splitString(selectedCartType?.nameEng)}}
+            {{selectedBrand?.name}}, {{selectedTvType?.name}}, {{selectedTvType?.nameEng}}, TV, TELEVİZYON, {{splitString(selectedCartType?.name)}}, {{splitString(selectedCartType?.nameEng)}},
             <ng-container *ngFor="let cardCodeItem of CardCodes; let i = index">
               {{cardCodeItem}}{{ (CardCodes.length - 1 ) !== i ? ',' : ''}}
             </ng-container>,
