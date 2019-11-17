@@ -193,14 +193,14 @@
             <ng-container *ngFor="let cardCodeItem of CardCodes; let i = index">
               {{cardCodeItem}}{{ (CardCodes.length - 1 ) !== i ? ',' : ''}}
             </ng-container>
-            {{selectedBrand?.name}} {{modelValue}} {{selectedTvType?.name}} {{selectedCartType?.name}} {{selectedCartType? '(' + selectedCartType?.nameEng + ')': null}}
+            - {{selectedBrand?.name}} {{modelValue}} {{selectedTvType?.name}} TV {{selectedCartType?.name}} {{selectedCartType? '(' + selectedCartType?.nameEng + ')': null}}
           </div>
         </div>
         <div class="col-6 mb-4">
           <h4 class="text-danger">KISA AÇIKLAMA</h4>
           <hr>
           <div class="short-desc">
-            {{selectedBrand?.name}} {{modelValue}} {{selectedTvType?.name}} {{selectedCartType?.name}} / {{selectedCartType?.nameEng}} FOR {{selectedBrand?.name}} {{selectedTvType?.nameEng}}. BOARD NO.S 
+            {{selectedBrand?.name}} {{modelValue}} {{selectedTvType?.name}} TV {{selectedCartType?.name}} / {{selectedCartType?.nameEng}} FOR {{selectedBrand?.name}} {{selectedTvType?.nameEng}} TV. BOARD NO.S 
             <ng-container *ngFor="let cardCodeItem of CardCodes; let i = index">
               {{cardCodeItem}}{{ (CardCodes.length - 1 ) !== i ? ',' : ''}}
             </ng-container>
@@ -210,20 +210,21 @@
           <h4 class="text-danger">SAYFA AÇIKLAMASI</h4>
           <hr>
           <div class="page-desc">
-            {{selectedBrand?.name}} Marka {{modelValue}} Model {{selectedTvSize?.size}} {{selectedTvSize ? '(' +selectedTvSize.screen+')' : null}} {{selectedTvType?.name}} {{selectedCartType?.name}}'DIR KART KOD NO.LARI 
+            {{selectedBrand?.name}} MARKA {{modelValue}} MODEL {{selectedTvSize?.size}} {{selectedTvSize ? '(' +selectedTvSize.screen+')' : null}} {{selectedTvType?.name}} TV {{selectedCartType?.name}}'DIR. KART KOD NO.LARI 
             <ng-container *ngFor="let cardCodeItem of CardCodes; let i = index">
               {{cardCodeItem}}{{ (CardCodes.length - 1 ) !== i ? ',' : ''}}
             </ng-container>
+            DIR
           </div>
         </div>
         <div class="col-6 mb-4">
           <h4 class="text-danger">SAYFA ANAHTAR KELİME</h4>
           <hr>
           <div class="page-keyword">
-            {{selectedBrand?.name}}, {{selectedTvType?.name}}, {{selectedTvType?.nameEng}}, TV, TELEVİZYON, {{splitString(selectedCartType?.name)}}, {{splitString(selectedCartType?.nameEng)}},
+            {{selectedBrand?.name}}, {{selectedTvType?.name}}, TV, TELEVİZYON, {{splitString(selectedCartType?.name)}}, {{splitString(selectedCartType?.nameEng)}},
             <ng-container *ngFor="let cardCodeItem of CardCodes; let i = index">
-              {{cardCodeItem}}{{ (CardCodes.length - 1 ) !== i ? ',' : ''}}
-            </ng-container>,
+              {{cardCodeItem}},
+            </ng-container>
             {{selectedTvSize?.size}}, {{selectedTvSize?.screen}}, {{modelValue}}
           </div>
         </div>
@@ -308,7 +309,7 @@
         <ng-container *ngFor="let cardCodeItem of CardCodes; let i = index">
           {{cardCodeItem}}{{ (CardCodes.length - 1 ) !== i ? ',' : ''}}
         </ng-container>
-          NUMARALARINI TAŞIYAN {{selectedCartType ? selectedCartType.name : '.....'}}'DIR'.<br />
+          KART NUMARALARINI TAŞIYAN {{selectedCartType ? selectedCartType.name : '.....'}}'DIR.<br />
         AYDIN ELEKTRONİK STOK KODU: <strong>{{isNullorBlank(productCode) ? '.....' : productCode}}</strong>.</div>
       
       </div>

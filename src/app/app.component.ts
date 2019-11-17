@@ -91,8 +91,7 @@ export class AppComponent {
 
   splitString(str){
     if(str == undefined || str == null) return '';
-    str = str.trim();
-    return str.split(' ').join(', ');
+    return str.trim().split(' ').join(', ');
   }
 
   changeCartType(event) {
@@ -140,14 +139,12 @@ export class AppComponent {
 
   removeCardCode(input, index) {
     this.CardCodes.splice(index, 1);
-    // setTimeout(() => {
-    //   input.validator(input.control);
-    // }, 100)
   }
 
   createHtml(form) {
     console.log(form);
-    this.generatedHtml = this.sablon.nativeElement.outerHTML;
+    let outerHtml = this.sablon.nativeElement.outerHTML;
+    this.generatedHtml = outerHtml.replace(/<\!--.*?-->/g, "");
   }
 
   copyHtml(codeTextElement) {
